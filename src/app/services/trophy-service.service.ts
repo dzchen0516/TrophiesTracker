@@ -12,6 +12,8 @@ export class TrophyServiceService {
   userLogin(username : string, password : string) {
     //setup header
     var headers = new HttpHeaders();
+    headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
     headers.append('Content-Type', 'application/json');
     headers.append('Accept', 'application/json');
     const httpOptions = { headers };
@@ -23,6 +25,12 @@ export class TrophyServiceService {
     };
 
     //post data
-    this.http.post(this.url, JSON.stringify(body), httpOptions);
+    this.http.post(this.url, JSON.stringify(body), httpOptions)
+    .subscribe( //subscribe 
+      data => {
+        console.log(data['_body'])
+      }, error => {;
+        console.log(error)
+      });
   }
 }

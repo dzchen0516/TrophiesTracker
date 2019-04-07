@@ -12,11 +12,14 @@ import { AppRoutingModule } from './app-routing.module';
 //for api call
 import { HttpClientModule } from '@angular/common/http'
 
+//two-way data binding for form inputs
+import { FormsModule } from '@angular/forms'
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, 
-            HttpClientModule],
+            HttpClientModule, FormsModule],
   providers: [
     StatusBar,
     SplashScreen,
