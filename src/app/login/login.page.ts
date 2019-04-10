@@ -10,7 +10,7 @@ import { TrophyServiceService } from '../services/trophy-service.service';
 export class LoginPage implements OnInit {
 
   results: Observable<any>;
-  username: '';
+  email: '';
   password: '';
   constructor(private trophyService: TrophyServiceService) { }
 
@@ -18,9 +18,9 @@ export class LoginPage implements OnInit {
   }
 
   login() {
-    console.log(this.username);
+    console.log(this.email);
     console.log(this.password);
-    this.trophyService.userLogin(this.username, this.password);
+    this.trophyService.userLogin(this.email, this.password);
   }
 
 }
