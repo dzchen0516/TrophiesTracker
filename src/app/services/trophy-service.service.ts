@@ -10,7 +10,7 @@ export class TrophyServiceService {
 
 	userLogin(username : string, password : string) {
   
-		//setup header
+		//setup header test
 
 		const httpOptions = { headers: new HttpHeaders({
 				'Content-Type': 'application/json',
