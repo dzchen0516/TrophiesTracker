@@ -15,11 +15,14 @@ import { HttpClientModule } from '@angular/common/http'
 //two-way data binding for form inputs
 import { FormsModule } from '@angular/forms'
 
+
+import { IonicStorageModule } from '@ionic/storage'
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, 
-            HttpClientModule, FormsModule],
+            HttpClientModule, FormsModule, IonicStorageModule.forRoot()],
   providers: [
     StatusBar,
     SplashScreen,
