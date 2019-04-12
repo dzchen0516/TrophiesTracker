@@ -19,7 +19,7 @@ export class TrophyServiceService {
   authenticationState = new BehaviorSubject(false);
 
   //url of the api call
-  url = 'http://159.203.15.30/trophyapi/api/users/token.json';
+  base_url = 'http://159.203.15.30/trophyapi/api/users/';
 
   //storage to store the token
   //http to make api calls
@@ -36,38 +36,77 @@ export class TrophyServiceService {
               });  
     }
 
-  //handle user login
-  userLogin(email : string, password : string) {
-    //setup header
-    const httpOptions = { headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-      }) 
-    };
+   //handle user login
+   userLogin(email : string, password : string) {
+		//setup header
+		const httpOptions = { headers: new HttpHeaders({
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+			}) 
+		};
     
-    //prepare data
-    let body = {
-      email: email,
-      password: password
-    };
+		//prepare data
+		let body = {
+			email: email,
+			password: password
+		};
 
-    //post data
-    this.http.post(this.url, JSON.stringify(body), httpOptions)
-    .subscribe( //subscribe to get results
-      data => {
-        console.log(data);
+		var token_url = this.base_url + 'token.json';
+
+		//post data
+		this.http.post(token_url, JSON.stringify(body), httpOptions)
+		.subscribe( //subscribe to get results
+			data => {
+				console.log(data);
         
-        //Store the token
-        this.storage.set(TOKEN_KEY, data['data']['token']).then(
-          res => {
-            //change the authentication state to notify the observers
-            this.authenticationState.next(true);
-          }
-        );
-      }, error => {;
-        console.log(error)
-      });
-  }
+				//Store the token
+				this.storage.set(TOKEN_KEY, data['data']['token']).then(
+				res => {
+					//change the authentication state to notify the observers
+					this.authenticationState.next(true);
+				}
+			);
+		}, error => {;
+			console.log(error)
+		});
+	}
+
+	userSignup(email : string, username : string, password : string, avatar : string){
+		//setup header
+		const httpOptions = { headers: new HttpHeaders({
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+			}) 
+		};
+		
+		//prepare data
+		let body = {
+			email: email,
+			password: password,
+			username: username,
+			avatar: avatar
+		};
+		
+		var register_url = this.base_url + 'register';
+		
+		//post data
+		this.http.post(register_url, JSON.stringify(body), httpOptions)
+		.subscribe( //subscribe to get results
+			data => {
+				console.log(data);
+        
+				//Store the token
+				this.storage.set(TOKEN_KEY, data['data']['token']).then(
+				res => {
+					//change the authentication state to notify the observers
+					this.authenticationState.next(true);
+				}
+			);
+		}, error => {;
+			console.log(error)
+		})
+		
+	}
 
   //check to see of the user has been authenticated
   isAuthenticated() {
