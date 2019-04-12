@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Storage } from '@ionic/storage'
+import { Platform } from '@ionic/angular';
 
 //authentication token
 const TOKEN_KEY = 'auth-token';
@@ -22,8 +23,20 @@ export class TrophyServiceService {
 
   //storage to store the token
   //http to make api calls
-  constructor(private storage : Storage, private http : HttpClient) { }
+  //plt to 
+  constructor(private storage : Storage, 
+              private http : HttpClient, 
+              private plt : Platform) {
+              
+              //if everything(localStorage etc.) on the
+              //patform(or device) is ready, validate the token
+              //to see if the user has been authenticated
+              this.plt.ready().then(() => {
+                 this.checkToken();
+              });  
+    }
 
+  //handle user login
   userLogin(email : string, password : string) {
     //setup header
     const httpOptions = { headers: new HttpHeaders({
@@ -54,5 +67,16 @@ export class TrophyServiceService {
       }, error => {;
         console.log(error)
       });
+  }
+
+  //check to see of the user has been authenticated
+  isAuthenticated() {
+    return this.authenticationState.value;
+  }
+
+
+  //check to see if the token is valid
+  checkToken() {
+    //TODO
   }
 }
