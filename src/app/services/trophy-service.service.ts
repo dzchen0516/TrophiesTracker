@@ -13,8 +13,8 @@ const TOKEN_KEY = 'auth-token';
 })
 export class TrophyServiceService {
 
-  //this behaviorSubject can subscribed to get the latest
-  //authentication state. This default is set to false
+  //this behaviorSubject can be subscribed to get the latest
+  //authentication state. This is set to false by default
   //which means the user is not authenticated at the beginning
   authenticationState = new BehaviorSubject(false);
 
@@ -23,7 +23,7 @@ export class TrophyServiceService {
 
   //storage to store the token
   //http to make api calls
-  //plt to 
+  //plt to validate the token
   constructor(private storage : Storage, 
               private http : HttpClient, 
               private plt : Platform) {
@@ -32,6 +32,7 @@ export class TrophyServiceService {
               //patform(or device) is ready, validate the token
               //to see if the user has been authenticated
               this.plt.ready().then(() => {
+                 console.log("trohpyService checking authentication token");
                  this.checkToken();
               });  
     }
@@ -66,7 +67,7 @@ export class TrophyServiceService {
 					this.authenticationState.next(true);
 				}
 			);
-		}, error => {;
+		}, error => {
 			console.log(error)
 		});
 	}
@@ -102,9 +103,9 @@ export class TrophyServiceService {
 					this.authenticationState.next(true);
 				}
 			);
-		}, error => {;
+		}, error => {
 			console.log(error)
-		})
+		});
 		
 	}
 
@@ -116,6 +117,30 @@ export class TrophyServiceService {
 
   //check to see if the token is valid
   checkToken() {
-    //TODO
+    return this.storage.get(TOKEN_KEY).then(res => {
+      if(res) {
+        //TODO: need to talk to the server and validate the token,
+        //      it will assume the token is valid for now for testing purpose
+        
+        //setup header
+		    const httpOptions = { headers: new HttpHeaders({
+			    'Content-Type': 'application/json',
+			    'Accept': 'application/json'
+			    }) 
+		    };
+
+        //post data
+		    this.http.get(this.base_url, httpOptions)
+		    .subscribe( //subscribe to get results
+			    data => {
+            this.authenticationState.next(true);
+				    console.log(data);
+		      }, error => {
+            this.authenticationState.next(false);
+			      console.log(error)
+        });
+        
+      }
+    });
   }
 }
