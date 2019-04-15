@@ -121,9 +121,9 @@ export class TrophyServiceService {
       if(res) {
         //TODO: need to talk to the server and validate the token,
         //      it will assume the token is valid for now for testing purpose
-        this.authenticationState.next(true);
+        //this.authenticationState.next(true);
         //setup header
-		    /*const httpOptions = { headers: new HttpHeaders({
+		    const httpOptions = { headers: new HttpHeaders({
 			    'Content-Type': 'application/json',
 			    'Accept': 'application/json'
 			    }) 
@@ -138,7 +138,7 @@ export class TrophyServiceService {
 		      }, error => {
             this.authenticationState.next(false);
 			      console.log(error)
-        });*/
+        });
         
       }
     });

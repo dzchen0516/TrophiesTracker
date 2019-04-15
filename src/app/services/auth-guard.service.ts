@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router/';
+import { Router, CanActivate } from '@angular/router/';
 import { TrophyServiceService } from './trophy-service.service';
 
 @Injectable({
@@ -7,11 +7,17 @@ import { TrophyServiceService } from './trophy-service.service';
 })
 export class AuthGuardService implements CanActivate{
 
-  constructor(private authService : TrophyServiceService) { }
+  constructor(private router: Router, private authService : TrophyServiceService) { }
 
-  //This is the guard to decide if a route/path can be navigated
-  //if this returns true, navigation will continue
+  //This guard will check if the user has been
+  //authenticated, if it's true, it'll redirect
+  //the user to the scoreboard page. Otherwise,
+  //it'll redirect the user to the login page
   canActivate() : boolean {
-    return this.authService.isAuthenticated();
+    if(this.authService.isAuthenticated()) {
+      return true;
+    }
+    this.router.navigate(['login']);
+    return false;
   }
 }
