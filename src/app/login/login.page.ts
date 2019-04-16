@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TrophyServiceService } from '../services/trophy-service.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -9,10 +10,15 @@ import { TrophyServiceService } from '../services/trophy-service.service';
 })
 export class LoginPage implements OnInit {
 
+  loginForm: FormGroup;
   results: Observable<any>;
   email: '';
   password: '';
-  constructor(private trophyService: TrophyServiceService) { }
+  constructor(private trophyService: TrophyServiceService, public formBuilder: FormBuilder) { 
+    this.loginForm = formBuilder.group({
+      emailInput: ['', Validators.compose([Validators.pattern['+@+'], Validators.required])]
+    });
+  }
 
   ngOnInit() {
   }
