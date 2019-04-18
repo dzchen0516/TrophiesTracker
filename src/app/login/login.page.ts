@@ -11,12 +11,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
+  submitAttempt: boolean = false;
   results: Observable<any>;
-  email: '';
-  password: '';
   constructor(private trophyService: TrophyServiceService, public formBuilder: FormBuilder) { 
     this.loginForm = formBuilder.group({
-      emailInput: ['', Validators.compose([Validators.pattern['+@+'], Validators.required])]
+      email: ['', Validators.compose([Validators.email, Validators.required])],
+      password: ['', Validators.required]
     });
   }
 
@@ -24,9 +24,18 @@ export class LoginPage implements OnInit {
   }
 
   login() {
-    console.log(this.email);
-    console.log(this.password);
-    this.trophyService.userLogin(this.email, this.password);
+    console.log(this.loginForm.controls.email.value);
+    console.log(this.loginForm.controls.password.value);
+    
+    if(!this.loginForm.valid) {
+			this.submitAttempt = true;
+			console.log("Form is invalid");
+    }
+    else {
+      this.trophyService.userLogin(this.loginForm.controls.email.value, 
+                                    this.loginForm.controls.password.value);
+      this.submitAttempt = false;
+    }
   }
 
 }
