@@ -1,6 +1,8 @@
 {
   "name": "TrophiesTracker",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "cb7f5515"
 }
