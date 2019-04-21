@@ -15,7 +15,7 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 
 import { finalize } from 'rxjs/operators';
  
-const STORAGE_KEY = 'my_images';
+const STORAGE_KEY = 'my_image';
 
 @Component({
 	 selector: 'app-signup',
@@ -28,7 +28,7 @@ export class SignupPage implements OnInit {
 	public signupForm: FormGroup;
 	public submitAttempt: boolean = false;
 	
-	images = [];
+	img = {};
 	
 	constructor(private trophyService: TrophyServiceService, public formBuilder: FormBuilder,
 	private webview: WebView, 
@@ -46,7 +46,7 @@ export class SignupPage implements OnInit {
 	        username: ['', Validators.compose([UsernameValidator.isValid, Validators.required])],
 			password: ['', Validators.compose([Validators.required])],
 			confrimPassword: ['', ],
-			avatar: ['', Validators.compose([Validators.required])]
+			avatar: ['',]
 	    });
 	}
 
@@ -81,8 +81,11 @@ export class SignupPage implements OnInit {
 			correctOrientation: true
 		};
 	 
-		this.camera.getPicture(options).then(imagePath => {
-			if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
+		this.camera.getPicture(options).then(imagePath => 
+		{
+			if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) 
+			{
+				
 				this.filePath.resolveNativePath(imagePath)
 					.then(filePath => {
 						let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
@@ -109,11 +112,11 @@ export class SignupPage implements OnInit {
 	}
 	 
 	updateStoredImages(name) {
-		this.storage.get(STORAGE_KEY).then(images => {
-			let arr = JSON.parse(images);
+		this.storage.get(STORAGE_KEY).then(img => {
+			let arr = JSON.parse(img);
 			if (!arr) {
-				let newImages = [name];
-				this.storage.set(STORAGE_KEY, JSON.stringify(newImages));
+				let newImage = [name];
+				this.storage.set(STORAGE_KEY, JSON.stringify(newImage));
 			} else {
 				arr.push(name);
 				this.storage.set(STORAGE_KEY, JSON.stringify(arr));
@@ -128,7 +131,7 @@ export class SignupPage implements OnInit {
 				filePath: filePath
 			};
 	 
-			this.images = [newEntry, ...this.images];
+			this.img = newEntry;
 			this.ref.detectChanges(); // trigger change detection cycle
 		});
 	}
@@ -168,7 +171,7 @@ export class SignupPage implements OnInit {
 				this.signupForm.controls.email.value, 
 				this.signupForm.controls.username.value, 
 				this.signupForm.controls.password.value, 
-				this.signupForm.controls.avatar.value);
+				'');
 		}
 	}
 }
