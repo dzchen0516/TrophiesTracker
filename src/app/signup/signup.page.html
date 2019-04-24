@@ -9,9 +9,7 @@
 
 <ion-content>
 	<ion-list>
-		<ion-img class="signup-avatar-img" *ngIf="img.path !== undefined" [src]="img.path"></ion-img>
-		<ion-img (click)="selectImage()" class="signup-avatar-img" *ngIf="img.path === undefined" src="assets/icon/trophy-logo.png"></ion-img>
-		
+ 
 		<form [formGroup]="signupForm">
 			<ion-item>
 				<ion-label position="floating">Email:</ion-label>
@@ -24,8 +22,8 @@
 				formControlName="username" type="text"></ion-input>
 			</ion-item>
 			<ion-item *ngIf="!signupForm.controls.username.valid  && (signupForm.controls.username.dirty || submitAttempt)">
-				<p style="color: #ea6153;">Username is invalid</p>
-			</ion-item>
+          <p style="color: #ea6153;">Username is invalid</p>
+      </ion-item>
 			
 			<ion-item>
 				<ion-label position="floating">Password:</ion-label>
@@ -35,15 +33,16 @@
 				<ion-label position="floating">Confirm Password:</ion-label>
 				<ion-input formControlName="confrimPassword" type="password"></ion-input>
 			</ion-item>
+			<ion-item>
+				<ion-label position="floating">Avatar:</ion-label>
+				<ion-input formControlName="avatar" type="text"></ion-input>
+			</ion-item>
 			
 		</form>
 		
 		<p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>
+  
+		<ion-button expand="block" (click)="signUp()">Sign up</ion-button>
+		
 	</ion-list>
 </ion-content>
-
-<ion-footer>
-  <ion-toolbar color="primary">
-    <ion-button fill="clear" expand="full" color="light" (click)="signUp()">Sign Up</ion-button>
-  </ion-toolbar>
-</ion-footer>
