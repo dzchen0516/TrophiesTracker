@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { SignupPage } from './signup.page';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ImagePicker } from '@ionic-native/image-picker/ngx';
 
 const routes: Routes = [
   {
@@ -22,6 +23,9 @@ const routes: Routes = [
     IonicModule,
 	ReactiveFormsModule,
     RouterModule.forChild(routes)
+  ],
+  providers: [
+	ImagePicker
   ],
   declarations: [SignupPage]
 })

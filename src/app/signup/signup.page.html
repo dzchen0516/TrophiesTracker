@@ -9,7 +9,13 @@
 
 <ion-content>
 	<ion-list>
- 
+		<div class="images">
+          <div class="one-image" *ngFor="let img of imageResponse" class="signup-avatar-img">
+            <img src="{{img}}" alt="" srcset="">
+          </div>
+        </div>
+		<ion-button class="signup-avatar-btn" (click)="getImages()">Choose Images</ion-button>
+		
 		<form [formGroup]="signupForm">
 			<ion-item>
 				<ion-label position="floating">Email:</ion-label>
