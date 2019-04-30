@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/login"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Sign up</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-list>
+		<div class="images">
+          <div class="one-image" *ngFor="let img of imageResponse" class="signup-avatar-img">
+            <img src="{{img}}" alt="" srcset="">
+          </div>
+        </div>
+		<ion-button class="signup-avatar-btn" (click)="getImages()">Choose Images</ion-button>
+		
+		<form [formGroup]="signupForm">
+			<ion-item>
+				<ion-label position="floating">Email:</ion-label>
+				<ion-input  formControlName="email" type="text"></ion-input>
+			</ion-item>
+			
+			<ion-item>
+				<ion-label position="floating">Username:</ion-label>
+				<ion-input [class.invalid]="!signupForm.controls.username.valid && (signupForm.controls.username.dirty || submitAttempt)" 
+				formControlName="username" type="text"></ion-input>
+			</ion-item>
+			<ion-item *ngIf="!signupForm.controls.username.valid  && (signupForm.controls.username.dirty || submitAttempt)">
+          <p style="color: #ea6153;">Username is invalid</p>
+      </ion-item>
+			
+			<ion-item>
+				<ion-label position="floating">Password:</ion-label>
+				<ion-input formControlName="password" type="password"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label position="floating">Confirm Password:</ion-label>
+				<ion-input formControlName="confrimPassword" type="password"></ion-input>
+			</ion-item>
+			<ion-item>
+				<ion-label position="floating">Avatar:</ion-label>
+				<ion-input formControlName="avatar" type="text"></ion-input>
+			</ion-item>
+			
+		</form>
+		
+		<p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>
+  
+		<ion-button expand="block" (click)="signUp()">Sign up</ion-button>
+		
+	</ion-list>
+</ion-content>
