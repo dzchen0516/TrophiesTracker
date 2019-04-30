@@ -26,7 +26,7 @@ export class SignupPage implements OnInit {
 	        username: ['', Validators.compose([UsernameValidator.isValid, Validators.required])],
 			password: ['', Validators.compose([Validators.required])],
 			confrimPassword: ['', ],
-			avatar: ['', Validators.compose([Validators.required])]
+			avatar: ['', ]
 	    });
 	}
 
@@ -85,7 +85,7 @@ export class SignupPage implements OnInit {
 				this.signupForm.controls.email.value, 
 				this.signupForm.controls.username.value, 
 				this.signupForm.controls.password.value, 
-				this.signupForm.controls.avatar.value);
+				'');
 		}
 	}
 }
