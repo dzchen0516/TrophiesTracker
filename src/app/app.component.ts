@@ -34,11 +34,11 @@ export class AppComponent {
       this.trophyService.authenticationState.subscribe(state => {
           console.log("trophyService: state changed: ", state);
           //If the user has been authenticated,
-          //it will redirect the user to the scoreboard page.
+          //it will redirect the user to the tabs page.
           //If the user has not been authenticated,
           //it's handled in auth-guard.service.ts
           if(state) {
-            this.router.navigate(['trophy', 'scoreboard']);
+            this.router.navigate(['trophy', 'tabs', 'scoreboard']);
           }
       });
     });
