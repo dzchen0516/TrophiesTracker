@@ -117,8 +117,9 @@ export class TrophyServiceService {
 
   //check to see if the token is valid
   checkToken() {
-    return this.storage.get(TOKEN_KEY).then(res => {
-      if(res) {
+    return this.storage.get(TOKEN_KEY).then(token => {
+      if(token) {
+		console.log(token);
         //TODO: need to talk to the server and validate the token,
         //      it will assume the token is valid for now for testing purpose
         //this.authenticationState.next(true);
@@ -129,7 +130,7 @@ export class TrophyServiceService {
 			    }) 
 		    };
 
-        //post data
+        //get data
 		    this.http.get(this.base_url, httpOptions)
 		    .subscribe( //subscribe to get results
 			    data => {
@@ -142,5 +143,30 @@ export class TrophyServiceService {
         
       }
     });
+  }
+
+  //retrieve all the users
+  getUsers() {
+	this.storage.get(TOKEN_KEY).then(token => {  
+		if(token) {
+			const httpOptions = { headers: new HttpHeaders({
+				'Accept': 'application/json',
+				'Authorization': 'Bearer ' + token
+				}) 
+			};
+
+			console.log(httpOptions);
+			console.log(token);
+
+			//get data
+			this.http.get(this.base_url, httpOptions)
+			.subscribe( //subscribe to get results
+				data => {
+					console.log(data);
+	 	 	}, error => {
+				  console.log(error)
+			});
+		}
+	});
   }
 }

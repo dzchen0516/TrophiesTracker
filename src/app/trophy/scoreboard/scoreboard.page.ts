@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TrophyServiceService } from '../../services/trophy-service.service';
 
 @Component({
   selector: 'app-scoreboard',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ScoreboardPage implements OnInit {
 
-  constructor() { }
+  constructor(private trophyService: TrophyServiceService) { }
 
   ngOnInit() {
+    this.trophyService.getUsers();
   }
 
 }

@@ -13,3 +13,18 @@
     overflow: hidden;
     overflow-y: auto;
 }
+
+.header{
+    background-color:lightgrey;
+}
+
+ion-col {
+    border: solid 1px grey;
+    border-bottom-style: none;
+    border-right-style: none;
+    border-bottom: solid 1px grey;
+  }
+
+.last-col {
+    border-right: solid 1px grey;
+}
