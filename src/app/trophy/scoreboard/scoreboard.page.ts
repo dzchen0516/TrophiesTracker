@@ -12,6 +12,8 @@ export class ScoreboardPage implements OnInit {
 
   ngOnInit() {
     this.trophyService.getUsers();
+    this.trophyService.getTrophies();
+    this.trophyService.getUsersTrophies();
   }
 
 }

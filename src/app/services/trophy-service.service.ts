@@ -155,11 +155,54 @@ export class TrophyServiceService {
 				}) 
 			};
 
-			console.log(httpOptions);
-			console.log(token);
-
 			//get data
 			this.http.get(this.base_url, httpOptions)
+			.subscribe( //subscribe to get results
+				data => {
+					console.log(data);
+	 	 	}, error => {
+				  console.log(error)
+			});
+		}
+	});
+  }
+
+  //retrieve all the trophies
+  getTrophies() {
+	this.storage.get(TOKEN_KEY).then(token => {  
+		if(token) {
+			const httpOptions = { headers: new HttpHeaders({
+				'Accept': 'application/json',
+				'Authorization': 'Bearer ' + token
+				}) 
+			};
+
+			var getTrophiesUrl = this.base_url.slice(0, -6) + "trophies";
+			//get data
+			this.http.get(getTrophiesUrl, httpOptions)
+			.subscribe( //subscribe to get results
+				data => {
+					console.log(data);
+	 	 	}, error => {
+				  console.log(error)
+			});
+		}
+	});
+  }
+
+  //retrieve all users' trophies
+  getUsersTrophies() {
+	this.storage.get(TOKEN_KEY).then(token => {  
+		if(token) {
+			const httpOptions = { headers: new HttpHeaders({
+				'Accept': 'application/json',
+				'Authorization': 'Bearer ' + token
+				}) 
+			};
+
+			var getUsersTrophyUrl = this.base_url.slice(0, -2) + "_trophies";
+			//get data
+			this.http.get(getUsersTrophyUrl, httpOptions)
 			.subscribe( //subscribe to get results
 				data => {
 					console.log(data);
