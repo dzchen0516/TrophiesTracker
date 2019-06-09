@@ -146,7 +146,7 @@ export class TrophyServiceService {
   }
 
   //retrieve all the users
-  getUsers() {
+  getUsers(allUsers, callback) {
 	this.storage.get(TOKEN_KEY).then(token => {  
 		if(token) {
 			const httpOptions = { headers: new HttpHeaders({
@@ -159,7 +159,11 @@ export class TrophyServiceService {
 			this.http.get(this.base_url, httpOptions)
 			.subscribe( //subscribe to get results
 				data => {
-					console.log(data);
+					Object.assign(allUsers, data["data"]);
+
+					console.log("allUsers");
+					console.log(allUsers);
+					callback();
 	 	 	}, error => {
 				  console.log(error)
 			});
@@ -168,7 +172,7 @@ export class TrophyServiceService {
   }
 
   //retrieve all the trophies
-  getTrophies() {
+  getTrophies(allTrophies, callback) {
 	this.storage.get(TOKEN_KEY).then(token => {  
 		if(token) {
 			const httpOptions = { headers: new HttpHeaders({
@@ -182,7 +186,12 @@ export class TrophyServiceService {
 			this.http.get(getTrophiesUrl, httpOptions)
 			.subscribe( //subscribe to get results
 				data => {
-					console.log(data);
+					Object.assign(allTrophies, data["data"]);
+
+					console.log("allTrophies");
+					console.log(allTrophies);
+
+					callback();
 	 	 	}, error => {
 				  console.log(error)
 			});
@@ -191,7 +200,7 @@ export class TrophyServiceService {
   }
 
   //retrieve all users' trophies
-  getUsersTrophies() {
+  getUsersTrophies(allUsersTrophies, callback, scoreboard) {
 	this.storage.get(TOKEN_KEY).then(token => {  
 		if(token) {
 			const httpOptions = { headers: new HttpHeaders({
@@ -205,7 +214,10 @@ export class TrophyServiceService {
 			this.http.get(getUsersTrophyUrl, httpOptions)
 			.subscribe( //subscribe to get results
 				data => {
-					console.log(data);
+					Object.assign(allUsersTrophies, data["data"]);
+					console.log("allUsersTrophies");
+					console.log(allUsersTrophies);
+					callback(scoreboard);
 	 	 	}, error => {
 				  console.log(error)
 			});

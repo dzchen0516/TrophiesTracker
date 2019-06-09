@@ -43,21 +43,12 @@
             </ion-col>
           </ion-row>
 
-          <ion-row>
+          <ion-row *ngFor="let item of results">
             <ion-col>
-              Dingzhong
+              {{ item.name }}
             </ion-col>
             <ion-col class="last-col">
-              10
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
-            <ion-col>
-              Dustin
-            </ion-col>
-            <ion-col class="last-col">
-              20
+              {{ item.num }}
             </ion-col>
           </ion-row>
           
