@@ -27,7 +27,7 @@ export class ScoreboardPage implements OnInit {
     ScoreboardPage.allUsers = [];
     ScoreboardPage.allTrophies = [];
     ScoreboardPage.allUsersTrophies = [];
-    self.results = [{name: "Dingzhong", num: 1}, {name: "Dustin", num: 2}];
+    self.results = [];
 
     this.trophyService.getUsers(ScoreboardPage.allUsersResults, self.setAllUsers);
     this.trophyService.getTrophies(ScoreboardPage.allTrophiesResults, self.setAllTrophies);
@@ -60,20 +60,33 @@ export class ScoreboardPage implements OnInit {
 
   setAllUsersTrophies(scoreboard) {
     ScoreboardPage.allUsersTrophiesResults.forEach(item => {
-      var name = ScoreboardPage.allUsers.find(obj => {
+      //retrive user name from allUsers array
+      var userName = ScoreboardPage.allUsers.find(obj => {
           return obj.id === item.user_id;
       });
 
+      //retrive trophy type from allTrophies array
       var num = ScoreboardPage.allTrophies.filter(obj => {
           return obj.id === item.trophy_id;
       });
 
-      console.log(name);
-      console.log(num);
+      //check if the user exisits in the results array
+      //that'll be rendered
+      var keyIndex = scoreboard.results.findIndex(obj => {
+          return obj.username === userName.username;
+      });
 
+      //create new entry {username: number of trophies} 
+      //and push it to the results array
+      //if the user not existis in the to the results array
+      if(keyIndex === -1) {
+        scoreboard.results.push({username: userName.username, num: 1});
+      }
+      //otherwise update the number of trohpies for the user
+      else {
+        scoreboard.results[keyIndex].num += 1;
+      }
 
-
-      scoreboard.results = [{name: "Abc", num: 1}];
     });
   }
 
