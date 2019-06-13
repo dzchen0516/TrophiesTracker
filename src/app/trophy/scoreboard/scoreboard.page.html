@@ -7,19 +7,19 @@
 <ion-content>
 
   <ion-toolbar>
-      <ion-segment id="trophy-tab">
-          <ion-segment-button>
+      <ion-segment id="trophy-tab" (ionChange)="trophySegmentChanged($event)">
+          <ion-segment-button value="notes">
             <ion-icon name="musical-notes"></ion-icon>
           </ion-segment-button>
-          <ion-segment-button checked>
+          <ion-segment-button checked value="trophy">
             <ion-icon name="trophy"></ion-icon>
           </ion-segment-button>
-          <ion-segment-button>
+          <ion-segment-button value="bells">
             <ion-icon name="notifications"></ion-icon>
           </ion-segment-button>
       </ion-segment>
 
-      <ion-segment id="period-tab">
+      <ion-segment id="period-tab" (ionChange)="periodSegmentChanged($event)">
           <ion-segment-button checked value="quarter">
             <ion-label>This Quarter</ion-label>
           </ion-segment-button>
@@ -45,7 +45,7 @@
 
           <ion-row *ngFor="let item of results">
             <ion-col>
-              {{ item.name }}
+              {{ item.username }}
             </ion-col>
             <ion-col class="last-col">
               {{ item.num }}
