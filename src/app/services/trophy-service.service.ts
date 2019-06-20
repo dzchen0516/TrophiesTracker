@@ -117,8 +117,9 @@ export class TrophyServiceService {
 
   //check to see if the token is valid
   checkToken() {
-    return this.storage.get(TOKEN_KEY).then(res => {
-      if(res) {
+    return this.storage.get(TOKEN_KEY).then(token => {
+      if(token) {
+		console.log(token);
         //TODO: need to talk to the server and validate the token,
         //      it will assume the token is valid for now for testing purpose
         //this.authenticationState.next(true);
@@ -129,7 +130,7 @@ export class TrophyServiceService {
 			    }) 
 		    };
 
-        //post data
+        //get data
 		    this.http.get(this.base_url, httpOptions)
 		    .subscribe( //subscribe to get results
 			    data => {
@@ -142,5 +143,85 @@ export class TrophyServiceService {
         
       }
     });
+  }
+
+  //retrieve all the users
+  getUsers(allUsers, callback) {
+	this.storage.get(TOKEN_KEY).then(token => {  
+		if(token) {
+			const httpOptions = { headers: new HttpHeaders({
+				'Accept': 'application/json',
+				'Authorization': 'Bearer ' + token
+				}) 
+			};
+
+			//get data
+			this.http.get(this.base_url, httpOptions)
+			.subscribe( //subscribe to get results
+				data => {
+					Object.assign(allUsers, data["data"]);
+
+					console.log("allUsers");
+					console.log(allUsers);
+					callback();
+	 	 	}, error => {
+				  console.log(error)
+			});
+		}
+	});
+  }
+
+  //retrieve all the trophies
+  getTrophies(allTrophies, callback) {
+	this.storage.get(TOKEN_KEY).then(token => {  
+		if(token) {
+			const httpOptions = { headers: new HttpHeaders({
+				'Accept': 'application/json',
+				'Authorization': 'Bearer ' + token
+				}) 
+			};
+
+			var getTrophiesUrl = this.base_url.slice(0, -6) + "trophies";
+			//get data
+			this.http.get(getTrophiesUrl, httpOptions)
+			.subscribe( //subscribe to get results
+				data => {
+					Object.assign(allTrophies, data["data"]);
+
+					console.log("allTrophies");
+					console.log(allTrophies);
+
+					callback();
+	 	 	}, error => {
+				  console.log(error)
+			});
+		}
+	});
+  }
+
+  //retrieve all users' trophies
+  getUsersTrophies(allUsersTrophies, callback, scoreboard) {
+	this.storage.get(TOKEN_KEY).then(token => {  
+		if(token) {
+			const httpOptions = { headers: new HttpHeaders({
+				'Accept': 'application/json',
+				'Authorization': 'Bearer ' + token
+				}) 
+			};
+
+			var getUsersTrophyUrl = this.base_url.slice(0, -2) + "_trophies";
+			//get data
+			this.http.get(getUsersTrophyUrl, httpOptions)
+			.subscribe( //subscribe to get results
+				data => {
+					Object.assign(allUsersTrophies, data["data"]);
+					console.log("allUsersTrophies");
+					console.log(allUsersTrophies);
+					callback(scoreboard);
+	 	 	}, error => {
+				  console.log(error)
+			});
+		}
+	});
   }
 }
