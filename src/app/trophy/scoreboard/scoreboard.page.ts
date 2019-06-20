@@ -42,9 +42,6 @@ export class ScoreboardPage implements OnInit {
 
 
   ngOnInit() {
-
-    console.log(ScoreboardPage.allUsersResults);
-    console.log("scoreboard page ng on init run");
   }
 
   setAllUsers() {
@@ -60,39 +57,8 @@ export class ScoreboardPage implements OnInit {
   }
 
   setAllUsersTrophies(scoreboard) {
+    //initialize the scoboard list
     scoreboard.renderScoreboard('trophy', 'quarter');
-    /*scoreboard.results = [];
-    ScoreboardPage.allUsersTrophiesResults.forEach(item => {
-      //retrive user name from allUsers array
-      var userName = ScoreboardPage.allUsers.find(obj => {
-          return obj.id === item.user_id;
-      });
-
-      //retrive trophy type from allTrophies array
-      var num = ScoreboardPage.allTrophies.filter(obj => {
-          return obj.id === item.trophy_id;
-      });
-
-      //check if the user exisits in the results array
-      //that'll be rendered
-      var keyIndex = scoreboard.results.findIndex(obj => {
-          return obj.username === userName.username;
-      });
-
-      console.log(userName.username);
-
-      //create new entry {username: number of trophies} 
-      //and push it to the results array
-      //if the user not existis in the to the results array
-      if(keyIndex === -1) {
-        scoreboard.results.push({username: userName.username, num: 1});
-      }
-      //otherwise update the number of trohpies for the user
-      else {
-        scoreboard.results[keyIndex].num += 1;
-      }
-
-    });*/
   }
 
   trophySegmentChanged(ev: any) {
@@ -100,44 +66,9 @@ export class ScoreboardPage implements OnInit {
     var self = this;
     self.currentTrophy = ev.detail.value;
 
+    //If the trophy type on the scoreboard changed,
+    //update the scoreboard list
     self.renderScoreboard(self.currentTrophy, self.currentPeriod);
-    
-    /*var trophyType = self.trophiesDict[self.currentTrophy];
-    self.results = [];
-
-    ScoreboardPage.allUsersTrophiesResults.forEach(item => {
-      //retrive user name from allUsers array
-      var userName = ScoreboardPage.allUsers.find(obj => {
-          return obj.id === item.user_id;
-      });
-
-      console.log(userName);
-
-      //retrive trophy type from allTrophies array
-      var num = ScoreboardPage.allTrophies.filter(obj => {
-          return obj.id === item.trophy_id && item.trophy_id === trophyType;
-      });
-
-      console.log(num);
-
-      //check if the user exisits in the results array
-      //that'll be rendered
-      var keyIndex = self.results.findIndex(obj => {
-          return obj.username === userName.username;
-      });
-
-      //create new entry {username: number of trophies} 
-      //and push it to the results array
-      //if the user not existis in the to the results array
-      if(keyIndex === -1) {
-        self.results.push({username: userName.username, num: num.length});
-      }
-      //otherwise update the number of trohpies for the user
-      else {
-        self.results[keyIndex].num += num.length;
-      }
-
-    });*/
   }
 
   periodSegmentChanged(ev: any) {
@@ -145,55 +76,9 @@ export class ScoreboardPage implements OnInit {
     var self = this;
     self.currentPeriod = ev.detail.value;
 
+    //If the period on the scoreboard changed,
+    //update the scoreboard list
     self.renderScoreboard(self.currentTrophy, self.currentPeriod);
-
-    /*var trophyType = self.trophiesDict[self.currentTrophy];
-    self.results = [];
-
-    var today_date = new Date();
-    var this_quarter = self.quarterOfTheYear(today_date.getMonth() + 1);
-
-    ScoreboardPage.allUsersTrophiesResults.forEach(item => {
-      var trophy_date = new Date(item.date_awarded);
-
-      var trophy_quarter = self.quarterOfTheYear(trophy_date.getMonth() + 1);
-
-      console.log(trophy_quarter);
-      console.log(this_quarter);
-
-      //retrive user name from allUsers array
-      var userName = ScoreboardPage.allUsers.find(obj => {
-          return obj.id === item.user_id;
-      });
-
-      console.log(userName);
-
-      //retrive trophy type from allTrophies array
-      var num = ScoreboardPage.allTrophies.filter(obj => {
-          return obj.id === item.trophy_id && item.trophy_id === trophyType;
-      });
-
-      console.log(num);
-
-      //check if the user exisits in the results array
-      //that'll be rendered
-      var keyIndex = self.results.findIndex(obj => {
-          return obj.username === userName.username;
-      });
-
-      //create new entry {username: number of trophies} 
-      //and push it to the results array
-      //if the user not existis in the to the results array
-      if(keyIndex === -1) {
-        self.results.push({username: userName.username, num: num.length});
-      }
-      //otherwise update the number of trohpies for the user
-      else {
-        self.results[keyIndex].num += num.length;
-      }
-
-    });*/
-    
   }
 
   quarterOfTheYear(month) {
@@ -211,7 +96,6 @@ export class ScoreboardPage implements OnInit {
 
     var today_date = new Date();
     var this_quarter = self.quarterOfTheYear(today_date.getMonth() + 1);
-    //var this_quarter = 4;
 
     //initiate the scoreboard list
     ScoreboardPage.allUsers.forEach(user => {
