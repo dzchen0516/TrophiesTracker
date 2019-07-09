@@ -36,7 +36,7 @@ export class ScoreboardPage implements OnInit {
     self.currentPeriod = "quarter";
 
     this.trophyService.getUsers(ScoreboardPage.allUsersResults, self.setAllUsers);
-    this.trophyService.getTrophies(ScoreboardPage.allTrophiesResults, self.setAllTrophies);
+    this.trophyService.getTrophies(ScoreboardPage.allTrophiesResults, self.setAllTrophies, self);
     this.trophyService.getUsersTrophies(ScoreboardPage.allUsersTrophiesResults, self.setAllUsersTrophies, self);
   }
 
@@ -50,10 +50,11 @@ export class ScoreboardPage implements OnInit {
     });
   }
 
-  setAllTrophies() {
+  setAllTrophies(scoreboard) {
     ScoreboardPage.allTrophiesResults.forEach(item => {
       ScoreboardPage.allTrophies.push({id: item.id, trophyType: item.name});
     });
+    scoreboard.renderScoreboard(scoreboard.currentTrophy, scoreboard.currentPeriod);
   }
 
   setAllUsersTrophies(scoreboard) {
@@ -117,7 +118,7 @@ export class ScoreboardPage implements OnInit {
           console.log(userName);
 
           //retrive trophy type from allTrophies array
-          var num = ScoreboardPage.allTrophies.filter(obj => {
+          const num = ScoreboardPage.allTrophies.filter(obj => {
             return obj.id === item.trophy_id && item.trophy_id === trophyType;
           });
 

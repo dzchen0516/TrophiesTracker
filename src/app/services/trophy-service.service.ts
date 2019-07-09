@@ -172,7 +172,7 @@ export class TrophyServiceService {
   }
 
   //retrieve all the trophies
-  getTrophies(allTrophies, callback) {
+  getTrophies(allTrophies, callback, scoreboard) {
 	this.storage.get(TOKEN_KEY).then(token => {  
 		if(token) {
 			const httpOptions = { headers: new HttpHeaders({
@@ -191,7 +191,7 @@ export class TrophyServiceService {
 					console.log("allTrophies");
 					console.log(allTrophies);
 
-					callback();
+					callback(scoreboard);
 	 	 	}, error => {
 				  console.log(error)
 			});
